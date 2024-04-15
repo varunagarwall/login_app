@@ -8,6 +8,9 @@ const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport_local_strategy');
+const { mongo } = require('mongoose');
+
+const MongoStore=require('connect-mongo')(session);
 
 app.use(express.urlencoded());
 
@@ -27,7 +30,7 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-
+// mongostore used to store the cookie in the db
 app.use(session({
     name: 'login_app',
     // TODO change the secret before deployment in production mode
@@ -36,7 +39,16 @@ app.use(session({
     resave: false,
     cookie: {
         maxAge: (1000 * 60 * 100)
+    },
+    store:new MongoStore(
+        {
+        mongooseConnection : db,
+        autoRemove:'disabled'
+    },
+    function(err){
+        console.log(err || 'connect -mmongo setup is ok')
     }
+ )
 }));
 
 app.use(passport.initialize());
