@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+
 <head>
 
 </head>
+
 <body>
     <h1> todo / <%= title %></h1>
 
     <ul>
-        <% if(locals.user){ %>
+        <% if(user){ %>
             <li>
                 <%= user.name %>
             </li>
@@ -14,26 +16,41 @@
                 <a href="/users/sign-out">Sign out</a>
             </li>
             <% }else {%>
-            <li>
-                <a href="/users/sign-in">Sign In</a>
-            </li>
-            <li>
-                <a href="/users/sign-up">Sign Up</a>
-            </li>
-            <% } %>
+                <li>
+                    <a href="/users/sign-in">Sign In</a>
+                </li>
+                <li>
+                    <a href="/users/sign-up">Sign Up</a>
+                </li>
+                <% } %>
     </ul>
-    <p><%= user.name %></p>
+    <p>
+        <%= user.name %>
+    </p>
 
-    <p><%= user.email %></p>
+    <p>
+        <%= user.email %>
+    </p>
 
 
-    <section id="feed-posts">
         <h4>Posts</h4>
-        <form section="" id="new-post-form" method="POST">
+
+        <form action="/posts/create"  method="POST">
             <textarea name="content" cols="30" rows="3"></textarea>
-        <input type="submit" value="Post">
+            <input type="submit" value="Post">
         </form>
-    </section>
+        <div>
+            <ul>
+                <% for(post of posts){%>
+                <li>
+                    <%= post.content %>
+                </li>
+                <small>
+                    <%= post.user.name%>
+                </small>
+                <% }%>
+            </ul>
+        </div>
 </body>
 
 </html>
