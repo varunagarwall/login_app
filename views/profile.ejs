@@ -5,7 +5,8 @@
 </head>
 
 <body>
-    <h1> todo / <%= title %></h1>
+    <h1> todo / <%= title %>
+    </h1>
 
     <ul>
         <% if(user){ %>
@@ -32,25 +33,50 @@
         <%= user.email %>
     </p>
 
-
+    <div>
         <h4>Posts</h4>
 
-        <form action="/posts/create"  method="POST">
+        <form action="/posts/create" method="POST">
             <textarea name="content" cols="30" rows="3"></textarea>
             <input type="submit" value="Post">
+
         </form>
-        <div>
-            <ul>
-                <% for(post of posts){%>
+        <ul>
+            <% for(post of posts){%>
                 <li>
-                    <%= post.content %>
+                    <p>
+
+                        <%= post.content %>
+                            <br>
+                            <small>
+                                <%= post.user.name%>
+                            </small>
+
+                    </p>
+
+                    <form action="/comments/create" method="POST">
+                        <textarea name="content" cols="30" rows="3" placeholder="add comment here"></textarea>
+                        <input type="hidden" name="post" value="<%= post._id %>">
+                        <input type="submit" value="Add comment">
+                    </form>
+                    <div>
+                        <ul id="post-comments-<%= post._id %>">
+                            <% for (comment of post.comments){ %>
+                                <p>
+                                    <%= comment.content%>
+
+                                        <br>
+                                        <small>
+                                            <%= comment.user.name %>
+                                        </small>
+                                        <% }%>
+                                </p>
+                        </ul>
                 </li>
-                <small>
-                    <%= post.user.name%>
-                </small>
-                <% }%>
-            </ul>
-        </div>
+
+                <%} %>
+        </ul>
+    </div>
 </body>
 
 </html>
