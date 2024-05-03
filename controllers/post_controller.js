@@ -15,13 +15,13 @@ module.exports.destroy = function(req,res){
     console.log(req.params)
     Post.findById(req.params.id,function(err,post){
         if(post.user==req.user.id){
-            console.log(req.user.id)
+            console.log(req.user)
             console.log(post.user)
 
             post.remove();
 
             comment.deleteMany({post:req.params.id},function(err){
-                res.redirect('/users/profile');
+                res.redirect('back');
                         } );
         }
         else{
