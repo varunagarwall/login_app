@@ -43,7 +43,6 @@ let newPostDom = function(post){
                 <input type="hidden" name="post" value="${ post._id }" >
                 <input type="submit" value="Add Comment">
             </form>
-
         <div class="post-comments-list">
             <ul id="post-comments-${ post._id }">
               
@@ -54,16 +53,16 @@ let newPostDom = function(post){
 </li>`)
 }
 
-createPost();
 
-let deletePost = function(deletelink){
+
+let deletePost = function(deleteLink){
     $(deleteLink).click(function(e){
         e.preventDefault;
-    })
+    
 
     $.ajax({
         type:'get',
-        url :$(deletelink).prop('href'),
+        url :$(deleteLink).prop('href'),
         success : function(data){
             $(`#post-${data.data.post_id}`).remove()
         },
@@ -71,6 +70,9 @@ let deletePost = function(deletelink){
             console.log(error.responseText)
         }
     })
+})
 }
+
+createPost();
 
 }
