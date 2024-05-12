@@ -26,14 +26,15 @@ module.exports.destroy = async function(req, res){
     try{
         let post = await Post.findById(req.params.id);
 
-        // if (post.user == req.user.id){
+        if (post.user == req.user.id){
             post.remove();
 
-            await Comment.deleteMany({post: req.params.id});
+            await Comment.deleteMany ({post: req.params.id});
 
  return res.status(200).json({
     message: "post and associated comments deleted successfully"
  });
+
 
             // if (req.xhr){
             //     return res.status(200).json({
@@ -46,9 +47,11 @@ module.exports.destroy = async function(req, res){
 
 
         //     return res.redirect('back');
-        // }else{ 
-        //     return res.redirect('back');
-        // }
+        }else{ 
+            return res.json(401,{
+                message: "unauthorized deletion"
+            })
+        }
 
     }catch(err){
        console.log('******',err);

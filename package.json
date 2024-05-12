@@ -17,6 +17,7 @@
     "express": "^4.19.2",
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.6.1",
     "mongoose": "^6.12.8",
     "mongoose-timestamp": "^0.6.0",
